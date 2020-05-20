@@ -39,6 +39,21 @@ const UserSerivce = {
         } catch (err) {
             return reject(err);
         }
+    }),
+    getUser: (id) => new Promise(async (resolve, reject) => {
+        try {
+            const foundUser = await User.findById(id);
+            if (!foundUser) {
+                return resolve(false);
+            }
+            const {username} = foundUser;
+            const user = {
+                username
+            }
+            return resolve(user);            
+        } catch (err) {
+            return reject(err);
+        }
     })
 }
 

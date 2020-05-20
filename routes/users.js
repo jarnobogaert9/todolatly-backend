@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const UserService = require('../services/UserService');
+const jwt = require('jsonwebtoken');
 
 router.post('/', async (req, res) => {
     const {username, password} = req.body;
@@ -47,8 +48,25 @@ router.get('/login', async (req, res) => {
     }
 });
 
-router.get('/:id', (req, res) => {
-
+router.get('/profile', async (req, res) => {
+    const {token} = req.query;
+    
+    const decoded = await jwt.decode(token, process.env.JWT_SECRET);
+    
+    if (!decoded) {
+        return res.send({
+            msg: 'Please retry'
+        });
+    }
+    const profile = await UserService.getUser(decoded._id);
+    if (!profile) {
+        return res.send({
+            msg: 'Please retry'
+        });
+    }
+    res.send({
+        data: profile
+    });
 });
 
 module.exports = router;

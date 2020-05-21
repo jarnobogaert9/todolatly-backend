@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 router.post('/', async (req, res) => {
     const {username, password} = req.body;
 
+    if (!username || !password) {
+        return res.status(400).send({
+            msg: "All fields are required"
+        }); 
+    }
+
     try {
         const created = await UserService.create(username, password);
         if (!created) {
@@ -26,6 +32,12 @@ router.post('/', async (req, res) => {
 router.get('/login', async (req, res) => {
     const {username, password} = req.query;
 
+    if (!username || !password) {
+        return res.status(400).send({
+            msg: "All fields are required"
+        }); 
+    }
+    
     try {
         // Invalid credentials if token is false
         const token = await UserService.login(username, password);

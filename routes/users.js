@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const UserService = require('../services/UserService');
 const jwt = require('jsonwebtoken');
+const verifyToken = require('../middleware/verifyToken');
 
 router.post('/', async (req, res) => {
     const {username, password} = req.body;
@@ -37,7 +38,7 @@ router.get('/login', async (req, res) => {
             msg: "All fields are required"
         }); 
     }
-    
+
     try {
         // Invalid credentials if token is false
         const token = await UserService.login(username, password);
@@ -60,7 +61,7 @@ router.get('/login', async (req, res) => {
     }
 });
 
-router.get('/profile', async (req, res) => {
+router.get('/profile', verifyToken,  async (req, res) => {
     const {token} = req.query;
     
     const decoded = await jwt.decode(token, process.env.JWT_SECRET);

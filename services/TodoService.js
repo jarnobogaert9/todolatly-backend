@@ -15,6 +15,14 @@ const TodoService = {
         } catch (err) {
             return reject(err);
         }
+    }),
+    getTodos: (userId) => new Promise(async (resolve, reject) => {
+        try {
+            const todos = await Todo.find({userId: userId});
+            return resolve(todos);
+        } catch (err) {
+            return reject(err);
+        }
     })
 }
 

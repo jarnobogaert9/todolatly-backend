@@ -14,7 +14,7 @@ router.post('/', verifyToken, async (req, res) => {
 
     try {
         await TodoService.create(text, id);
-        return res.send({
+        return res.status(201).send({
             msg: `Created todo successfully`
         })
     } catch (err) {
@@ -23,6 +23,20 @@ router.post('/', verifyToken, async (req, res) => {
             detail: err
         });
     }
+});
+
+router.get('/', verifyToken, async (req, res) => {
+    try {
+        const id = req.decoded;
+        const todos = await TodoService.getTodos(id);
+        res.status(200).send(todos);
+    } catch (err) {
+        return res.status(500).send({
+            msg: "Something went wrong",
+            detail: err
+        });
+    }
+
 });
 
 module.exports = router;

@@ -62,16 +62,9 @@ router.get('/login', async (req, res) => {
 });
 
 router.get('/profile', verifyToken,  async (req, res) => {
-    const {token} = req.query;
+    const id = req.decoded;
     
-    const decoded = await jwt.decode(token, process.env.JWT_SECRET);
-    
-    if (!decoded) {
-        return res.send({
-            msg: 'Please retry'
-        });
-    }
-    const profile = await UserService.getUser(decoded._id);
+    const profile = await UserService.getUser(id);
     if (!profile) {
         return res.send({
             msg: 'Please retry'

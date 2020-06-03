@@ -39,4 +39,22 @@ router.get('/', verifyToken, async (req, res) => {
 
 });
 
+router.delete('/:id', verifyToken, async (req, res) => {
+    try {
+        const { id: todoId } = req.params;
+        console.log("Delete todo with id:", todoId);
+        const userId = req.decoded;
+        const removedTodo = await TodoService.removeTodo(userId, todoId);
+        removedTodo ? 
+        res.status(200).send({msg: "Todo deleted successfully"}) : 
+        res.status(400).send({msg: "Something went wrong while deleting todo."})
+        console.log(`Removed todo: ${removedTodo}`);
+    } catch (err) {
+        return res.status(500).send({
+            msg: "Something went wrong",
+            detail: err
+        });
+    }
+});
+
 module.exports = router;

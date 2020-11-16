@@ -1,1 +1,1 @@
-docker build -t jarnobog/todolatly-backend .
+docker build -t jarnobog/todolatly-backend ../

@@ -20,7 +20,7 @@ router.post('/', verifyToken, async (req, res) => {
         })
     } catch (err) {
         return res.status(500).send({
-            msg: "Something went wrong",
+            msg: "Something went wrong while trying to create a todo",
             detail: err
         });
     }
@@ -33,7 +33,7 @@ router.get('/', verifyToken, async (req, res) => {
         res.status(200).send(todos);
     } catch (err) {
         return res.status(500).send({
-            msg: "Something went wrong",
+            msg: "Something went wrong while trying to fetch all todos",
             detail: err
         });
     }
@@ -52,7 +52,7 @@ router.delete('/:id', verifyToken, async (req, res) => {
         console.log(`Removed todo: ${removedTodo}`);
     } catch (err) {
         return res.status(500).send({
-            msg: "Something went wrong",
+            msg: "Something went wrong while trying to remove a todo",
             detail: err
         });
     }

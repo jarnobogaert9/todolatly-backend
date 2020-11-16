@@ -13,9 +13,10 @@ router.post('/', verifyToken, async (req, res) => {
     }
 
     try {
-        await TodoService.create(text, id);
+        const {todo} = await TodoService.create(text, id);
         return res.status(201).send({
-            msg: `Created todo successfully`
+            msg: `Created todo successfully`,
+            todo
         })
     } catch (err) {
         return res.status(500).send({

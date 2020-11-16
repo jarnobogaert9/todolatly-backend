@@ -1,0 +1,2 @@
+docker stop todolatly_backend
+docker rm todolatly_backend

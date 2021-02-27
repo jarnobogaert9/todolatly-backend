@@ -1,0 +1,7 @@
+version: "3"
+services:
+  todolatly:
+    build:
+      context: .
+    ports:
+      - "5000:5000"
